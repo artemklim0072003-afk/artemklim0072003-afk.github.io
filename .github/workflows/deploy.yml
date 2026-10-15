@@ -1,0 +1,62 @@
+name: Publish portfolio
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Obtain and verify the published files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, shutil, tarfile, urllib.request, urllib.error
+          release = json.loads(pathlib.Path('release.json').read_text())
+          archive = pathlib.Path('site.tar.gz')
+          snapshot = 'https://artemklim0072003-afk.github.io/releases/' + release['sha256'] + '.tar.gz'
+          try:
+              urllib.request.urlretrieve(snapshot, archive)
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+              with archive.open('wb') as output:
+                  for part in release['parts']:
+                      with urllib.request.urlopen(part['url'], timeout=120) as response:
+                          data = response.read()
+                      assert len(data) == part['size'] and hashlib.sha256(data).hexdigest() == part['sha256']
+                      output.write(data)
+          assert archive.stat().st_size == release['size']
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == release['sha256']
+          with tarfile.open(archive) as source:
+              source.extractall('_site', filter='data')
+          inventory = json.loads(pathlib.Path('_site/_site_manifest.json').read_text())
+          assert len(inventory) == release['files']
+          for name, expected in inventory.items():
+              data = (pathlib.Path('_site') / name).read_bytes()
+              assert len(data) == expected['size'] and hashlib.sha256(data).hexdigest() == expected['sha256'], name
+          snapshots = pathlib.Path('_site/releases')
+          snapshots.mkdir()
+          preserved = snapshots / (release['sha256'] + '.tar.gz')
+          shutil.copyfile(archive, preserved)
+          assert hashlib.sha256(preserved.read_bytes()).hexdigest() == release['sha256']
+          print('Verified', len(inventory), 'files; archive', release['sha256'])
+          PY
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v5
