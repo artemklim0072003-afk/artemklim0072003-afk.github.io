@@ -1,0 +1,37 @@
+{
+  "sha256": "37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb",
+  "size": 291665676,
+  "files": 2806,
+  "parts": [
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-00",
+      "sha256": "54b1e209228aabceb9b25ea5cb6533b60b90880a1ac45d0bd911a4da4f8e4a1c",
+      "size": 50331648
+    },
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-01",
+      "sha256": "f46b6d2c7fcc42d2dc9a5d627abce4f60c417609317948e2800f7563b0845767",
+      "size": 50331648
+    },
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-02",
+      "sha256": "3d2d8480b5b8703bb03a2488ef9b9336ab9eecdad3ea5f922a061d295df40c51",
+      "size": 50331648
+    },
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-03",
+      "sha256": "227acaccea006d39602900b98ffb88be7f6c684305b6da8d691444799e958e69",
+      "size": 50331648
+    },
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-04",
+      "sha256": "d419728a31c0cd508b2842a1a710245bbd565f3c75f476f4a87609211e585ea9",
+      "size": 50331648
+    },
+    {
+      "url": "https://stats.klimanovich.ru/hosting-transfer/37c2f5b08b6af318ae2564a4fabb0247c9c0c50899b009615aadb7d649ca6fdb/part-05",
+      "sha256": "8eae3fafe9c94b10e6c8d0d2b745b2bf145572de72418a5a4e705531d8b129a9",
+      "size": 40007436
+    }
+  ]
+}
